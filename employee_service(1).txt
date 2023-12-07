@@ -1,0 +1,45 @@
+#!/usr/bin/perl
+# employee_service.pl - Joseph Opolka
+
+use strict; 
+use warnings;
+
+use constant { 
+	DEPT_MIN => 1,
+	DEBT_MAX => 10,
+	ID_MIN_ID => 1,
+	ID_MAX => 5000,
+	YEARS_MIN => 1,
+	YEARS_MAX => 40,
+};
+
+sub input_valid {
+	my ($prompt, $min, $max) = @_; 
+	my $input;
+	do {
+		print "$prompt ($min-$max): ";
+		$input = <STDIN>;
+		chomp($input); 
+	}
+	while ($input !~ /^\d+$/ || $input < $min || $input > $max);
+	
+	return $input;
+}
+
+sub main {
+	my %dept_years;
+	
+	my $department = input_valid("Please enter your department number", DEPT_MIN, DEBT_MAX);
+	my $employee_id = input_valid("Please enter your employee ID", ID_MIN, ID_MAX);
+	my $years = input_valid("Please enter your years of service", YEARS_MIN, YEARS_MAX);
+	
+	$dept_years{$department} += $years;
+	
+	print "\nDepartment Number - $department\n";
+	print "ID Number - $employee_id\n";
+	print "Years of Service - $years\n";
+	
+	print "\nTotal Department Years (department $department) - $dept_years{$department}\n";
+}
+
+main();
